@@ -1,6 +1,6 @@
 import { KPICard } from "./KPICard";
 import { ChartCard } from "./ChartCard";
-import { Eye, Users, Percent, MousePointer, DollarSign, TrendingUp, Clock, FileText, Mail } from "lucide-react";
+import { Eye, Users, Percent, MousePointer, DollarSign, TrendingUp, Clock, FileText, Mail, ArrowLeft } from "lucide-react";
 import {
   LineChart,
   Line,
@@ -13,6 +13,10 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+
+interface MarketingCloudDashboardProps {
+  onBack?: () => void;
+}
 
 const emailTrendsData = [
   { month: "Jan", ctor: 22, ctr: 6.5, openRate: 28, uniqueClicks: 820 },
@@ -32,12 +36,19 @@ const ga4AttributionData = [
   { month: "Jun", conversions: 134, revenue: 6700, sessions: 3350 },
 ];
 
-export function MarketingCloudDashboard() {
+export function MarketingCloudDashboard({ onBack }: MarketingCloudDashboardProps) {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Marketing Cloud Dashboard</h1>
-        <p className="text-muted-foreground mt-1">Email and automation performance metrics</p>
+      <div className="flex items-center gap-4">
+        {onBack && (
+          <button onClick={onBack} className="p-2 rounded-lg hover:bg-muted transition-colors">
+            <ArrowLeft className="w-5 h-5 text-muted-foreground" />
+          </button>
+        )}
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">Marketing Cloud Dashboard</h1>
+          <p className="text-muted-foreground mt-1">Salesforce Marketing Cloud metrics</p>
+        </div>
       </div>
 
       {/* Universal KPIs */}

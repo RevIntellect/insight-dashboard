@@ -1,6 +1,6 @@
 import { KPICard } from "./KPICard";
 import { ChartCard } from "./ChartCard";
-import { Eye, Users, Percent, MousePointer, TrendingUp, Clock, Search, FileText, Target } from "lucide-react";
+import { Eye, Users, Percent, MousePointer, TrendingUp, Clock, Search, FileText, Target, ArrowLeft } from "lucide-react";
 import {
   LineChart,
   Line,
@@ -13,6 +13,10 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+
+interface SEODashboardProps {
+  onBack?: () => void;
+}
 
 const organicTrendData = [
   { month: "Jan", clicks: 10200, impressions: 145000, sessions: 9800 },
@@ -37,12 +41,19 @@ const keywordRankingsData = [
   { keyword: "cloud integration", position: 7, volume: 4800 },
 ];
 
-export function SEODashboard() {
+export function SEODashboard({ onBack }: SEODashboardProps) {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">SEO Dashboard</h1>
-        <p className="text-muted-foreground mt-1">Organic search performance metrics</p>
+      <div className="flex items-center gap-4">
+        {onBack && (
+          <button onClick={onBack} className="p-2 rounded-lg hover:bg-muted transition-colors">
+            <ArrowLeft className="w-5 h-5 text-muted-foreground" />
+          </button>
+        )}
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">Google Search Console</h1>
+          <p className="text-muted-foreground mt-1">Organic search performance metrics</p>
+        </div>
       </div>
 
       {/* Universal KPIs */}

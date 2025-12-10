@@ -1,6 +1,6 @@
 import { KPICard } from "./KPICard";
 import { ChartCard } from "./ChartCard";
-import { Eye, Users, Percent, MousePointer, DollarSign, TrendingUp, Clock, Star, FileText } from "lucide-react";
+import { Eye, Users, Percent, MousePointer, DollarSign, TrendingUp, Clock, Star, FileText, ArrowLeft } from "lucide-react";
 import {
   BarChart,
   Bar,
@@ -11,6 +11,10 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+
+interface GoogleAdsDashboardProps {
+  onBack?: () => void;
+}
 
 const searchTermData = [
   { term: "enterprise software", clicks: 850, conversions: 68 },
@@ -25,12 +29,19 @@ const campaignROIData = [
   { campaign: "Shopping Ads", roi: 420, revenue: 18500 },
 ];
 
-export function GoogleAdsDashboard() {
+export function GoogleAdsDashboard({ onBack }: GoogleAdsDashboardProps) {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Google Ads Dashboard</h1>
-        <p className="text-muted-foreground mt-1">GA4 & Google Ads integration metrics</p>
+      <div className="flex items-center gap-4">
+        {onBack && (
+          <button onClick={onBack} className="p-2 rounded-lg hover:bg-muted transition-colors">
+            <ArrowLeft className="w-5 h-5 text-muted-foreground" />
+          </button>
+        )}
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">Google Ads</h1>
+          <p className="text-muted-foreground mt-1">Google Analytics & Google Ads metrics</p>
+        </div>
       </div>
 
       {/* Universal KPIs */}

@@ -1,6 +1,6 @@
 import { KPICard } from "./KPICard";
 import { ChartCard } from "./ChartCard";
-import { Eye, Users, Percent, MousePointer, DollarSign, TrendingUp, Clock, Mail, Target } from "lucide-react";
+import { Eye, Users, Percent, MousePointer, DollarSign, TrendingUp, Clock, Mail, Target, ArrowLeft } from "lucide-react";
 import {
   LineChart,
   Line,
@@ -13,6 +13,10 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+
+interface DirectMailDashboardProps {
+  onBack?: () => void;
+}
 
 const responseRateTrendData = [
   { month: "Jan", responseRate: 4.8, sessions: 1100 },
@@ -30,12 +34,19 @@ const campaignROIData = [
   { campaign: "VIP Exclusive", roi: 420, revenue: 13500 },
 ];
 
-export function DirectMailDashboard() {
+export function DirectMailDashboard({ onBack }: DirectMailDashboardProps) {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Direct Mail Dashboard</h1>
-        <p className="text-muted-foreground mt-1">QR codes and vanity URLs tracked in GA4</p>
+      <div className="flex items-center gap-4">
+        {onBack && (
+          <button onClick={onBack} className="p-2 rounded-lg hover:bg-muted transition-colors">
+            <ArrowLeft className="w-5 h-5 text-muted-foreground" />
+          </button>
+        )}
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">Direct Mail</h1>
+          <p className="text-muted-foreground mt-1">QR codes and vanity URLs tracked in GA4</p>
+        </div>
       </div>
 
       {/* Universal KPIs */}

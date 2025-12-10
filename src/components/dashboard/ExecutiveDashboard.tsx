@@ -57,12 +57,28 @@ const insights = [
   { text: "Customer lifetime value up 22%", type: "warning" as const },
 ];
 
-export function ExecutiveDashboard() {
+interface ExecutiveDashboardProps {
+  onBack?: () => void;
+}
+
+export function ExecutiveDashboard({ onBack }: ExecutiveDashboardProps) {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Executive Summary & KPI Dashboard</h1>
-        <p className="text-muted-foreground mt-1">Year-to-date performance overview</p>
+      <div className="flex items-center gap-4">
+        {onBack && (
+          <button
+            onClick={onBack}
+            className="p-2 rounded-lg hover:bg-muted transition-colors"
+          >
+            <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </button>
+        )}
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">Executive Summary & KPI Dashboard</h1>
+          <p className="text-muted-foreground mt-1">Year-to-date performance overview</p>
+        </div>
       </div>
 
       {/* Top KPIs */}
