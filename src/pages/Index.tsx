@@ -10,6 +10,7 @@ import { DirectMailDashboard } from "@/components/dashboard/DirectMailDashboard"
 import { WebsiteTrafficDashboard } from "@/components/dashboard/WebsiteTrafficDashboard";
 import { AcquisitionDashboard } from "@/components/dashboard/AcquisitionDashboard";
 import { FinancialDashboard } from "@/components/dashboard/FinancialDashboard";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { BarChart3 } from "lucide-react";
 
 const Index = () => {
@@ -61,6 +62,7 @@ const Index = () => {
             <span className="text-xl font-bold text-foreground">Analytics Hub</span>
           </button>
           <div className="flex items-center gap-4">
+            <ThemeToggle />
             <div className="text-right">
               <p className="text-sm font-medium text-foreground">Marketing Team</p>
               <p className="text-xs text-muted-foreground">Connected to 4 sources</p>
