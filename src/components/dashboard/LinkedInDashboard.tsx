@@ -1,6 +1,6 @@
 import { KPICard } from "./KPICard";
 import { ChartCard } from "./ChartCard";
-import { Eye, Users, Percent, MousePointer, DollarSign, TrendingUp, Clock, Heart, Share2, UserPlus } from "lucide-react";
+import { Eye, Users, Percent, MousePointer, DollarSign, TrendingUp, Clock, Heart, Share2, UserPlus, ArrowLeft } from "lucide-react";
 import {
   BarChart,
   Bar,
@@ -10,6 +10,10 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+
+interface LinkedInDashboardProps {
+  onBack?: () => void;
+}
 
 const weeklyEngagementData = [
   { day: "Mon", engagement: 8500 },
@@ -26,12 +30,19 @@ const postTypeData = [
   { type: "Article", engagement: 225 },
 ];
 
-export function LinkedInDashboard() {
+export function LinkedInDashboard({ onBack }: LinkedInDashboardProps) {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">LinkedIn Dashboard</h1>
-        <p className="text-muted-foreground mt-1">Organic social performance metrics</p>
+      <div className="flex items-center gap-4">
+        {onBack && (
+          <button onClick={onBack} className="p-2 rounded-lg hover:bg-muted transition-colors">
+            <ArrowLeft className="w-5 h-5 text-muted-foreground" />
+          </button>
+        )}
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">LinkedIn Organic</h1>
+          <p className="text-muted-foreground mt-1">Organic social performance metrics</p>
+        </div>
       </div>
 
       {/* Universal KPIs */}

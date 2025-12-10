@@ -1,6 +1,6 @@
 import { KPICard } from "./KPICard";
 import { ChartCard } from "./ChartCard";
-import { Eye, Users, Percent, MousePointer, DollarSign, TrendingUp, Clock, Target } from "lucide-react";
+import { Eye, Users, Percent, MousePointer, DollarSign, TrendingUp, Clock, Target, ArrowLeft } from "lucide-react";
 import {
   LineChart,
   Line,
@@ -13,6 +13,10 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+
+interface LinkedInAdsDashboardProps {
+  onBack?: () => void;
+}
 
 const dailyPerformanceData = [
   { day: "Mon", conversions: 22, spend: 180 },
@@ -28,12 +32,19 @@ const campaignPerformanceData = [
   { campaign: "Brand Awareness", ctr: 1.5, conversions: 20 },
 ];
 
-export function LinkedInAdsDashboard() {
+export function LinkedInAdsDashboard({ onBack }: LinkedInAdsDashboardProps) {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">LinkedIn Ads Dashboard</h1>
-        <p className="text-muted-foreground mt-1">Paid LinkedIn advertising metrics</p>
+      <div className="flex items-center gap-4">
+        {onBack && (
+          <button onClick={onBack} className="p-2 rounded-lg hover:bg-muted transition-colors">
+            <ArrowLeft className="w-5 h-5 text-muted-foreground" />
+          </button>
+        )}
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">LinkedIn Ads</h1>
+          <p className="text-muted-foreground mt-1">Paid LinkedIn advertising metrics</p>
+        </div>
       </div>
 
       {/* Universal KPIs */}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Sidebar } from "@/components/dashboard/Sidebar";
+import { DashboardHome } from "@/components/dashboard/DashboardHome";
 import { ExecutiveDashboard } from "@/components/dashboard/ExecutiveDashboard";
 import { MarketingCloudDashboard } from "@/components/dashboard/MarketingCloudDashboard";
 import { LinkedInDashboard } from "@/components/dashboard/LinkedInDashboard";
@@ -7,74 +7,75 @@ import { LinkedInAdsDashboard } from "@/components/dashboard/LinkedInAdsDashboar
 import { GoogleAdsDashboard } from "@/components/dashboard/GoogleAdsDashboard";
 import { SEODashboard } from "@/components/dashboard/SEODashboard";
 import { DirectMailDashboard } from "@/components/dashboard/DirectMailDashboard";
-import { Bell, Search, User } from "lucide-react";
+import { WebsiteTrafficDashboard } from "@/components/dashboard/WebsiteTrafficDashboard";
+import { AcquisitionDashboard } from "@/components/dashboard/AcquisitionDashboard";
+import { FinancialDashboard } from "@/components/dashboard/FinancialDashboard";
+import { BarChart3 } from "lucide-react";
 
 const Index = () => {
-  const [activeSection, setActiveSection] = useState("executive");
+  const [activeSection, setActiveSection] = useState("home");
+
+  const handleBack = () => setActiveSection("home");
 
   const renderDashboard = () => {
     switch (activeSection) {
+      case "home":
+        return <DashboardHome onNavigate={setActiveSection} />;
       case "executive":
-        return <ExecutiveDashboard />;
+        return <ExecutiveDashboard onBack={handleBack} />;
       case "marketing-cloud":
-        return <MarketingCloudDashboard />;
+        return <MarketingCloudDashboard onBack={handleBack} />;
       case "linkedin":
-        return <LinkedInDashboard />;
+        return <LinkedInDashboard onBack={handleBack} />;
       case "linkedin-ads":
-        return <LinkedInAdsDashboard />;
+        return <LinkedInAdsDashboard onBack={handleBack} />;
       case "google-ads":
-        return <GoogleAdsDashboard />;
+        return <GoogleAdsDashboard onBack={handleBack} />;
       case "seo":
-        return <SEODashboard />;
-      case "email":
-        return <MarketingCloudDashboard />;
+        return <SEODashboard onBack={handleBack} />;
       case "direct-mail":
-        return <DirectMailDashboard />;
+        return <DirectMailDashboard onBack={handleBack} />;
+      case "website-traffic":
+        return <WebsiteTrafficDashboard onBack={handleBack} />;
+      case "acquisition":
+        return <AcquisitionDashboard onBack={handleBack} />;
+      case "financial":
+        return <FinancialDashboard onBack={handleBack} />;
       default:
-        return <ExecutiveDashboard />;
+        return <DashboardHome onNavigate={setActiveSection} />;
     }
   };
 
   return (
     <div className="min-h-screen bg-background">
-      <Sidebar activeSection={activeSection} onSectionChange={setActiveSection} />
-      
-      {/* Main Content */}
-      <div className="ml-64">
-        {/* Header */}
-        <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b border-border px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <input
-                type="text"
-                placeholder="Search metrics, reports..."
-                className="w-full pl-10 pr-4 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all"
-              />
+      {/* Header */}
+      <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b border-border px-6 py-4">
+        <div className="flex items-center justify-between max-w-7xl mx-auto">
+          <button 
+            onClick={() => setActiveSection("home")}
+            className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+          >
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+              <BarChart3 className="w-6 h-6 text-white" />
             </div>
-            <div className="flex items-center gap-4">
-              <button className="relative p-2 rounded-lg hover:bg-muted transition-colors">
-                <Bell className="w-5 h-5 text-muted-foreground" />
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-accent rounded-full" />
-              </button>
-              <div className="flex items-center gap-3 pl-4 border-l border-border">
-                <div className="text-right">
-                  <p className="text-sm font-medium text-foreground">Marketing Team</p>
-                  <p className="text-xs text-muted-foreground">Admin</p>
-                </div>
-                <div className="w-9 h-9 rounded-full bg-accent/10 flex items-center justify-center">
-                  <User className="w-5 h-5 text-accent" />
-                </div>
-              </div>
+            <span className="text-xl font-bold text-foreground">Analytics Hub</span>
+          </button>
+          <div className="flex items-center gap-4">
+            <div className="text-right">
+              <p className="text-sm font-medium text-foreground">Marketing Team</p>
+              <p className="text-xs text-muted-foreground">Connected to 4 sources</p>
+            </div>
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+              <span className="text-white font-semibold text-sm">MT</span>
             </div>
           </div>
-        </header>
+        </div>
+      </header>
 
-        {/* Dashboard Content */}
-        <main className="p-6">
-          {renderDashboard()}
-        </main>
-      </div>
+      {/* Dashboard Content */}
+      <main className="p-6 max-w-7xl mx-auto">
+        {renderDashboard()}
+      </main>
     </div>
   );
 };
