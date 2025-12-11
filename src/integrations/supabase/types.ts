@@ -14,7 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      marketing_data: {
+        Row: {
+          created_at: string
+          data: Json
+          date_range_end: string | null
+          date_range_start: string | null
+          id: string
+          metric_type: string
+          source: string
+          synced_at: string
+        }
+        Insert: {
+          created_at?: string
+          data: Json
+          date_range_end?: string | null
+          date_range_start?: string | null
+          id?: string
+          metric_type: string
+          source: string
+          synced_at?: string
+        }
+        Update: {
+          created_at?: string
+          data?: Json
+          date_range_end?: string | null
+          date_range_start?: string | null
+          id?: string
+          metric_type?: string
+          source?: string
+          synced_at?: string
+        }
+        Relationships: []
+      }
+      sync_log: {
+        Row: {
+          created_at: string
+          error_message: string | null
+          id: string
+          records_count: number | null
+          source: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          records_count?: number | null
+          source: string
+          status: string
+        }
+        Update: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          records_count?: number | null
+          source?: string
+          status?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
