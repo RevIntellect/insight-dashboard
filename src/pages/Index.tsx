@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 import { DashboardHome } from "@/components/dashboard/DashboardHome";
 import { ExecutiveDashboard } from "@/components/dashboard/ExecutiveDashboard";
 import { MarketingCloudDashboard } from "@/components/dashboard/MarketingCloudDashboard";
@@ -11,10 +12,17 @@ import { WebsiteTrafficDashboard } from "@/components/dashboard/WebsiteTrafficDa
 import { AcquisitionDashboard } from "@/components/dashboard/AcquisitionDashboard";
 import { FinancialDashboard } from "@/components/dashboard/FinancialDashboard";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { BarChart3 } from "lucide-react";
+import logoLight from "@/assets/logo-light.png";
+import logoDark from "@/assets/logo-dark.png";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState("home");
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleBack = () => setActiveSection("home");
 
@@ -56,10 +64,11 @@ const Index = () => {
             onClick={() => setActiveSection("home")}
             className="flex items-center gap-3 hover:opacity-80 transition-opacity"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-              <BarChart3 className="w-6 h-6 text-white" />
-            </div>
-            <span className="text-xl font-bold text-foreground">Analytics Hub</span>
+            <img 
+              src={mounted && resolvedTheme === "dark" ? logoDark : logoLight} 
+              alt="reLink Medical" 
+              className="h-10 w-auto"
+            />
           </button>
           <div className="flex items-center gap-4">
             <ThemeToggle />
