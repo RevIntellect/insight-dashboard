@@ -36,15 +36,19 @@ export interface GA4Credentials {
 }
 
 const GA4_FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ga4-sync`;
+const GUMLOOP_FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/gumloop-ga4-sync`;
+
+const USE_GUMLOOP = import.meta.env.VITE_USE_GUMLOOP === 'true';
 
 class GA4Service {
   private async callEdgeFunction(payload: any) {
     const { data: { session } } = await supabase.auth.getSession();
+    const functionUrl = USE_GUMLOOP ? GUMLOOP_FUNCTION_URL : GA4_FUNCTION_URL;
 
-    const response = await fetch(GA4_FUNCTION_URL, {
+    const response = await fetch(functionUrl, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${session?.access_token || import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        'Authorization': `Bearer ${session?.access_token || import.meta.env.VITE_SUPABASE_ANON_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(payload),
@@ -62,6 +66,17 @@ class GA4Service {
     return this.callEdgeFunction({
       action: 'save-credentials',
       credentials,
+    });
+  }
+
+  async saveGumloopConfig(apiKey: string, propertyId: string, workflowId?: string) {
+    return this.callEdgeFunction({
+      action: 'save-config',
+      config: {
+        api_key: apiKey,
+        property_id: propertyId,
+        workflow_id: workflowId,
+      },
     });
   }
 
