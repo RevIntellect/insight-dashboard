@@ -13,16 +13,17 @@ const Setup = () => {
 
   const apiKey = import.meta.env.VITE_GUMLOOP_API_KEY;
   const propertyId = import.meta.env.VITE_GA4_PROPERTY_ID;
+  const workflowId = import.meta.env.VITE_GUMLOOP_WORKFLOW_ID;
 
   const handleSaveConfig = async () => {
-    if (!apiKey || !propertyId) {
-      toast.error('Missing configuration. Please check your .env file.');
+    if (!apiKey || !propertyId || !workflowId) {
+      toast.error('Missing configuration. Please check your .env file (API Key, Property ID, and Workflow ID required).');
       return;
     }
 
     setIsSaving(true);
     try {
-      await ga4Service.saveGumloopConfig(apiKey, propertyId);
+      await ga4Service.saveGumloopConfig(apiKey, propertyId, workflowId);
       setIsConfigured(true);
       toast.success('Configuration saved successfully!');
     } catch (error: any) {
@@ -90,11 +91,17 @@ const Setup = () => {
                   {propertyId || 'Not set'}
                 </span>
               </div>
+              <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                <span className="text-sm font-medium">Gumloop Workflow ID</span>
+                <span className="text-sm text-muted-foreground font-mono">
+                  {workflowId || 'Not set'}
+                </span>
+              </div>
             </div>
 
             <Button
               onClick={handleSaveConfig}
-              disabled={isSaving || isConfigured || !apiKey || !propertyId}
+              disabled={isSaving || isConfigured || !apiKey || !propertyId || !workflowId}
               className="w-full"
             >
               {isSaving ? (
