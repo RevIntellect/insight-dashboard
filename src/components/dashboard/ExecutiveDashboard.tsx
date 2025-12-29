@@ -1,6 +1,9 @@
+import { useState } from "react";
+import { DateRange } from "react-day-picker";
 import { KPICard } from "./KPICard";
 import { ChartCard } from "./ChartCard";
 import { InsightsCard } from "./InsightsCard";
+import { DateRangePicker } from "./DateRangePicker";
 import { DollarSign, Users, TrendingUp, Percent, Clock, FileText, MousePointer, Eye } from "lucide-react";
 import {
   LineChart,
@@ -62,22 +65,26 @@ interface ExecutiveDashboardProps {
 }
 
 export function ExecutiveDashboard({ onBack }: ExecutiveDashboardProps) {
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
+
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center gap-4">
-        {onBack && (
-          <button
-            onClick={onBack}
-            className="p-2 rounded-lg hover:bg-muted transition-colors"
-          >
-            <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-          </button>
-        )}
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Executive Summary & KPI Dashboard</h1>
-          <p className="text-muted-foreground mt-1">Year-to-date performance overview</p>
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="p-2 rounded-lg hover:bg-muted transition-colors"
+            >
+              <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+            </button>
+          )}
+          <div>
+            <h1 className="text-2xl font-bold text-foreground">Executive Summary</h1>
+            <DateRangePicker dateRange={dateRange} onDateRangeChange={setDateRange} />
+          </div>
         </div>
       </div>
 
