@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
+import { DateRange } from "react-day-picker";
 import { DashboardHome } from "@/components/dashboard/DashboardHome";
 import { ExecutiveDashboard } from "@/components/dashboard/ExecutiveDashboard";
 import { MarketingCloudDashboard } from "@/components/dashboard/MarketingCloudDashboard";
@@ -12,11 +13,14 @@ import { WebsiteTrafficDashboard } from "@/components/dashboard/WebsiteTrafficDa
 import { AcquisitionDashboard } from "@/components/dashboard/AcquisitionDashboard";
 import { FinancialDashboard } from "@/components/dashboard/FinancialDashboard";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { DateRangePicker } from "@/components/dashboard/DateRangePicker";
+import { SyncButton } from "@/components/dashboard/SyncButton";
 import logoLight from "@/assets/logo-light.png";
 import logoDark from "@/assets/logo-dark.png";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState("home");
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -72,9 +76,19 @@ const Index = () => {
               className="h-10 w-auto"
             />
           </button>
+          
+          {/* Center Controls */}
+          <div className="flex items-center gap-3">
+            <DateRangePicker 
+              dateRange={dateRange}
+              onDateRangeChange={setDateRange}
+            />
+            <SyncButton />
+          </div>
+
           <div className="flex items-center gap-4">
             <ThemeToggle />
-            <div className="text-right">
+            <div className="text-right hidden sm:block">
               <p className="text-sm font-medium text-foreground">Marketing Team</p>
               <p className="text-xs text-muted-foreground">Connected to 4 sources</p>
             </div>
