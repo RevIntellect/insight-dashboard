@@ -308,11 +308,10 @@ Deno.serve(async (req: Request) => {
       default:
         throw new Error('Invalid action');
     }
-  } catch (error: unknown) {
+  } catch (error) {
     console.error('GA4 Sync Error:', error);
-    const errorMessage = error instanceof Error ? error.message : 'An error occurred';
     return new Response(
-      JSON.stringify({ error: errorMessage }),
+      JSON.stringify({ error: error.message || 'An error occurred' }),
       {
         status: 500,
         headers: {

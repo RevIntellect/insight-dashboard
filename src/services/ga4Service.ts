@@ -1,5 +1,4 @@
 import { supabase } from '@/integrations/supabase/client';
-import type { Json } from '@/integrations/supabase/types';
 
 export interface GA4Metrics {
   date: string;
@@ -42,14 +41,14 @@ const GUMLOOP_FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/
 const USE_GUMLOOP = import.meta.env.VITE_USE_GUMLOOP === 'true';
 
 class GA4Service {
-  private async callEdgeFunction(payload: Record<string, unknown>) {
+  private async callEdgeFunction(payload: any) {
     const { data: { session } } = await supabase.auth.getSession();
     const functionUrl = USE_GUMLOOP ? GUMLOOP_FUNCTION_URL : GA4_FUNCTION_URL;
 
     const response = await fetch(functionUrl, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${session?.access_token || import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        'Authorization': `Bearer ${session?.access_token || import.meta.env.VITE_SUPABASE_ANON_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(payload),
@@ -108,89 +107,55 @@ class GA4Service {
     });
   }
 
-  private parseJsonData<T>(data: Json): T | null {
-    if (typeof data === 'object' && data !== null && !Array.isArray(data)) {
-      return data as unknown as T;
-    }
-    return null;
-  }
-
   async getMetrics(startDate?: string, endDate?: string): Promise<GA4Metrics[]> {
     let query = supabase
-      .from('marketing_data')
+      .from('ga4_metrics')
       .select('*')
-      .eq('source', 'ga4')
-      .eq('metric_type', 'metrics')
-      .order('synced_at', { ascending: false });
+      .order('date', { ascending: false });
 
     if (startDate) {
-      query = query.gte('date_range_start', startDate);
+      query = query.gte('date', startDate);
     }
     if (endDate) {
-      query = query.lte('date_range_end', endDate);
+      query = query.lte('date', endDate);
     }
 
     const { data, error } = await query;
 
     if (error) throw error;
-    
-    // Parse the JSON data from marketing_data table
-    const metrics: GA4Metrics[] = [];
-    if (data) {
-      for (const row of data) {
-        const parsed = this.parseJsonData<GA4Metrics>(row.data);
-        if (parsed) {
-          metrics.push(parsed);
-        }
-      }
-    }
-    return metrics;
+    return data || [];
   }
 
   async getTrafficSources(startDate?: string, endDate?: string): Promise<GA4TrafficSource[]> {
     let query = supabase
-      .from('marketing_data')
+      .from('ga4_traffic_sources')
       .select('*')
-      .eq('source', 'ga4')
-      .eq('metric_type', 'traffic_sources')
-      .order('synced_at', { ascending: false });
+      .order('date', { ascending: false });
 
     if (startDate) {
-      query = query.gte('date_range_start', startDate);
+      query = query.gte('date', startDate);
     }
     if (endDate) {
-      query = query.lte('date_range_end', endDate);
+      query = query.lte('date', endDate);
     }
 
     const { data, error } = await query;
 
     if (error) throw error;
-    
-    const sources: GA4TrafficSource[] = [];
-    if (data) {
-      for (const row of data) {
-        const parsed = this.parseJsonData<GA4TrafficSource>(row.data);
-        if (parsed) {
-          sources.push(parsed);
-        }
-      }
-    }
-    return sources;
+    return data || [];
   }
 
   async getPagePerformance(startDate?: string, endDate?: string, limit?: number): Promise<GA4PagePerformance[]> {
     let query = supabase
-      .from('marketing_data')
+      .from('ga4_page_performance')
       .select('*')
-      .eq('source', 'ga4')
-      .eq('metric_type', 'page_performance')
-      .order('synced_at', { ascending: false });
+      .order('pageviews', { ascending: false });
 
     if (startDate) {
-      query = query.gte('date_range_start', startDate);
+      query = query.gte('date', startDate);
     }
     if (endDate) {
-      query = query.lte('date_range_end', endDate);
+      query = query.lte('date', endDate);
     }
     if (limit) {
       query = query.limit(limit);
@@ -199,31 +164,17 @@ class GA4Service {
     const { data, error } = await query;
 
     if (error) throw error;
-    
-    const pages: GA4PagePerformance[] = [];
-    if (data) {
-      for (const row of data) {
-        const parsed = this.parseJsonData<GA4PagePerformance>(row.data);
-        if (parsed) {
-          pages.push(parsed);
-        }
-      }
-    }
-    return pages;
+    return data || [];
   }
 
   async getCredentials(): Promise<GA4Credentials | null> {
     const { data, error } = await supabase
-      .from('marketing_data')
+      .from('ga4_credentials')
       .select('*')
-      .eq('source', 'ga4')
-      .eq('metric_type', 'credentials')
       .maybeSingle();
 
     if (error) throw error;
-    if (!data) return null;
-    
-    return this.parseJsonData<GA4Credentials>(data.data);
+    return data ? data.credentials : null;
   }
 
   async syncAllData(propertyId: string, startDate?: string, endDate?: string) {
