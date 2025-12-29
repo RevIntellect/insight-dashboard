@@ -55,18 +55,20 @@ const Index = () => {
     }
   };
 
+  const logoSrc = mounted && resolvedTheme === "dark" ? logoDark : logoLight;
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b border-border px-6 py-4">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
-          <button 
+          <button
             onClick={() => setActiveSection("home")}
             className="flex items-center gap-3 hover:opacity-80 transition-opacity"
           >
-            <img 
-              src={mounted && resolvedTheme === "dark" ? logoDark : logoLight} 
-              alt="reLink Medical" 
+            <img
+              src={logoSrc}
+              alt="reLink Medical"
               className="h-10 w-auto"
             />
           </button>
@@ -76,7 +78,7 @@ const Index = () => {
               <p className="text-sm font-medium text-foreground">Marketing Team</p>
               <p className="text-xs text-muted-foreground">Connected to 4 sources</p>
             </div>
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center">
               <span className="text-white font-semibold text-sm">MT</span>
             </div>
           </div>
