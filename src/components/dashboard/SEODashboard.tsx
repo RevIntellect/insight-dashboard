@@ -1,6 +1,7 @@
 import { KPICard } from "./KPICard";
 import { ChartCard } from "./ChartCard";
-import { Eye, Users, Percent, MousePointer, TrendingUp, Clock, Search, FileText, Target, ArrowLeft } from "lucide-react";
+import { DashboardHeader } from "./DashboardHeader";
+import { Eye, Users, Percent, MousePointer, TrendingUp, Clock, Target } from "lucide-react";
 import {
   LineChart,
   Line,
@@ -13,10 +14,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-
-interface SEODashboardProps {
-  onBack?: () => void;
-}
 
 const organicTrendData = [
   { month: "Jan", clicks: 10200, impressions: 145000, sessions: 9800 },
@@ -41,22 +38,11 @@ const keywordRankingsData = [
   { keyword: "cloud integration", position: 7, volume: 4800 },
 ];
 
-export function SEODashboard({ onBack }: SEODashboardProps) {
+export function SEODashboard() {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center gap-4">
-        {onBack && (
-          <button onClick={onBack} className="p-2 rounded-lg hover:bg-muted transition-colors">
-            <ArrowLeft className="w-5 h-5 text-muted-foreground" />
-          </button>
-        )}
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Google Search Console</h1>
-          <p className="text-muted-foreground mt-1">Organic search performance metrics</p>
-        </div>
-      </div>
+      <DashboardHeader title="Google Search Console" subtitle="Organic search performance metrics" />
 
-      {/* Universal KPIs */}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
         <KPICard title="Sessions / Visits" value="11.2K" change="+6.7%" icon={Eye} />
         <KPICard title="Users" value="9,450" change="+6.3%" icon={Users} />
@@ -73,7 +59,6 @@ export function SEODashboard({ onBack }: SEODashboardProps) {
         <KPICard title="Avg Session Duration" value="3:15" change="+0:18" icon={Clock} />
       </div>
 
-      {/* SEO Specific */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <KPICard title="Organic Clicks" value="12.3K" change="+6.6%" icon={MousePointer} />
         <KPICard title="Impressions" value="168K" change="+6.3%" icon={Eye} />
@@ -81,7 +66,6 @@ export function SEODashboard({ onBack }: SEODashboardProps) {
         <KPICard title="Avg. Position" value="5.6" change="-0.8" isPositive icon={Target} />
       </div>
 
-      {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <ChartCard title="Organic Traffic Trend">
           <ResponsiveContainer width="100%" height={280}>
@@ -90,13 +74,7 @@ export function SEODashboard({ onBack }: SEODashboardProps) {
               <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <YAxis yAxisId="left" stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <YAxis yAxisId="right" orientation="right" stroke="hsl(var(--muted-foreground))" fontSize={12} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
-                }}
-              />
+              <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "8px" }} />
               <Legend />
               <Line yAxisId="left" type="monotone" dataKey="clicks" name="Clicks" stroke="hsl(155, 70%, 45%)" strokeWidth={2} />
               <Line yAxisId="left" type="monotone" dataKey="sessions" name="Sessions" stroke="hsl(220, 70%, 55%)" strokeWidth={2} />
@@ -111,13 +89,7 @@ export function SEODashboard({ onBack }: SEODashboardProps) {
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
               <XAxis type="number" stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <YAxis dataKey="page" type="category" stroke="hsl(var(--muted-foreground))" fontSize={11} width={90} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
-                }}
-              />
+              <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "8px" }} />
               <Legend />
               <Bar dataKey="traffic" name="Traffic" fill="hsl(155, 70%, 45%)" radius={[0, 4, 4, 0]} />
               <Bar dataKey="conversions" name="Conversions" fill="hsl(220, 70%, 55%)" radius={[0, 4, 4, 0]} />
@@ -126,7 +98,6 @@ export function SEODashboard({ onBack }: SEODashboardProps) {
         </ChartCard>
       </div>
 
-      {/* Keyword Rankings */}
       <ChartCard title="Top Keyword Rankings">
         <div className="space-y-4">
           {keywordRankingsData.map((item, index) => (

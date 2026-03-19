@@ -1,6 +1,7 @@
 import { KPICard } from "./KPICard";
 import { ChartCard } from "./ChartCard";
-import { TrendingUp, Users, Target, Percent, ArrowLeft } from "lucide-react";
+import { DashboardHeader } from "./DashboardHeader";
+import { TrendingUp, Users, Target, Percent } from "lucide-react";
 import {
   BarChart,
   Bar,
@@ -14,10 +15,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-
-interface AcquisitionDashboardProps {
-  onBack: () => void;
-}
 
 const channelData = [
   { channel: "Organic Search", users: 85000, sessions: 125000 },
@@ -36,21 +33,10 @@ const sourceData = [
   { name: "Other", value: 5, color: "hsl(0, 72%, 55%)" },
 ];
 
-export function AcquisitionDashboard({ onBack }: AcquisitionDashboardProps) {
+export function AcquisitionDashboard() {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center gap-4">
-        <button
-          onClick={onBack}
-          className="p-2 rounded-lg hover:bg-muted transition-colors"
-        >
-          <ArrowLeft className="w-5 h-5 text-muted-foreground" />
-        </button>
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Acquisition Overview</h1>
-          <p className="text-muted-foreground mt-1">How users find and reach your site</p>
-        </div>
-      </div>
+      <DashboardHeader title="Acquisition Overview" subtitle="How users find and reach your site" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <KPICard title="Total Acquisitions" value="227K" change="+14.2%" icon={TrendingUp} />
@@ -66,13 +52,7 @@ export function AcquisitionDashboard({ onBack }: AcquisitionDashboardProps) {
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
               <XAxis type="number" stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <YAxis dataKey="channel" type="category" stroke="hsl(var(--muted-foreground))" fontSize={12} width={100} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
-                }}
-              />
+              <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "8px" }} />
               <Legend />
               <Bar dataKey="users" fill="hsl(155, 70%, 45%)" radius={[0, 4, 4, 0]} />
               <Bar dataKey="sessions" fill="hsl(220, 70%, 55%)" radius={[0, 4, 4, 0]} />
@@ -97,13 +77,7 @@ export function AcquisitionDashboard({ onBack }: AcquisitionDashboardProps) {
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
-                }}
-              />
+              <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "8px" }} />
             </PieChart>
           </ResponsiveContainer>
         </ChartCard>

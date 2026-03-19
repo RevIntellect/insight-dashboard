@@ -1,103 +1,92 @@
-import { 
-  LayoutDashboard, 
-  Globe, 
-  TrendingUp, 
-  DollarSign, 
-  Linkedin, 
+import { useNavigate } from "react-router-dom";
+import {
+  LayoutDashboard,
+  Globe,
+  TrendingUp,
+  DollarSign,
+  Linkedin,
   Target,
   Search,
   Cloud,
   Mail
 } from "lucide-react";
 
-interface DashboardHomeProps {
-  onNavigate: (section: string) => void;
-}
-
 const dashboardCards = [
   {
-    id: "executive",
+    path: "/executive",
     title: "Executive Summary",
     subtitle: "online vs medical",
     icon: LayoutDashboard,
     color: "from-indigo-500 to-purple-600",
-    textColor: "text-white",
   },
   {
-    id: "website-traffic",
+    path: "/website-traffic",
     title: "Website Traffic",
     subtitle: "",
     icon: Globe,
     color: "from-teal-500 to-cyan-600",
-    textColor: "text-white",
   },
   {
-    id: "acquisition",
+    path: "/acquisition",
     title: "Acquisition Overview",
     subtitle: "",
     icon: TrendingUp,
     color: "from-emerald-500 to-green-600",
-    textColor: "text-white",
   },
   {
-    id: "financial",
+    path: "/financial",
     title: "Financial Performance",
     subtitle: "",
     icon: DollarSign,
     color: "from-green-700 to-emerald-800",
-    textColor: "text-white",
   },
   {
-    id: "linkedin-ads",
+    path: "/linkedin-ads",
     title: "LinkedIn Ads",
     subtitle: "",
     icon: Linkedin,
     color: "from-blue-600 to-blue-700",
-    textColor: "text-white",
   },
   {
-    id: "linkedin",
+    path: "/linkedin",
     title: "LinkedIn Organic",
     subtitle: "",
     icon: Linkedin,
     color: "from-sky-400 to-cyan-500",
-    textColor: "text-white",
   },
   {
-    id: "google-ads",
+    path: "/google-ads",
     title: "Google Ads",
     subtitle: "",
     icon: Target,
     color: "from-amber-400 to-yellow-500",
-    textColor: "text-white",
   },
   {
-    id: "seo",
+    path: "/seo",
     title: "Google Search Console",
     subtitle: "",
     icon: Search,
     color: "from-emerald-500 to-teal-600",
-    textColor: "text-white",
   },
   {
-    id: "marketing-cloud",
+    path: "/marketing-cloud",
     title: "Marketing Cloud",
     subtitle: "",
     icon: Cloud,
     color: "from-red-500 to-rose-600",
-    textColor: "text-white",
   },
   {
-    id: "direct-mail",
+    path: "/direct-mail",
     title: "Direct Mail",
     subtitle: "",
     icon: Mail,
     color: "from-orange-500 to-amber-600",
-    textColor: "text-white",
   },
 ];
 
-export function DashboardHome({ onNavigate }: DashboardHomeProps) {
+export function DashboardHome() {
+  const navigate = useNavigate();
+
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="text-center">
@@ -108,8 +97,8 @@ export function DashboardHome({ onNavigate }: DashboardHomeProps) {
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
         {dashboardCards.map((card, index) => (
           <button
-            key={card.id}
-            onClick={() => onNavigate(card.id)}
+            key={card.path}
+            onClick={() => navigate(card.path)}
             className="group relative flex flex-col items-center"
             style={{ animationDelay: `${index * 50}ms` }}
           >
@@ -126,7 +115,7 @@ export function DashboardHome({ onNavigate }: DashboardHomeProps) {
                 flex flex-col items-center justify-center gap-2 p-4
                 shadow-lg hover:shadow-xl transition-all duration-300
                 hover:scale-105 hover:-translate-y-1
-                ${card.textColor}
+                text-white
               `}
             >
               <card.icon className="w-8 h-8" />

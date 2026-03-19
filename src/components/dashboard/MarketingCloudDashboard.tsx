@@ -1,6 +1,7 @@
 import { KPICard } from "./KPICard";
 import { ChartCard } from "./ChartCard";
-import { Eye, Users, Percent, MousePointer, DollarSign, TrendingUp, Clock, FileText, Mail, ArrowLeft } from "lucide-react";
+import { DashboardHeader } from "./DashboardHeader";
+import { Eye, Users, Percent, MousePointer, DollarSign, TrendingUp, Clock, Mail } from "lucide-react";
 import {
   LineChart,
   Line,
@@ -13,10 +14,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-
-interface MarketingCloudDashboardProps {
-  onBack?: () => void;
-}
 
 const emailTrendsData = [
   { month: "Jan", ctor: 22, ctr: 6.5, openRate: 28, uniqueClicks: 820 },
@@ -36,22 +33,11 @@ const ga4AttributionData = [
   { month: "Jun", conversions: 134, revenue: 6700, sessions: 3350 },
 ];
 
-export function MarketingCloudDashboard({ onBack }: MarketingCloudDashboardProps) {
+export function MarketingCloudDashboard() {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center gap-4">
-        {onBack && (
-          <button onClick={onBack} className="p-2 rounded-lg hover:bg-muted transition-colors">
-            <ArrowLeft className="w-5 h-5 text-muted-foreground" />
-          </button>
-        )}
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Marketing Cloud Dashboard</h1>
-          <p className="text-muted-foreground mt-1">Salesforce Marketing Cloud metrics</p>
-        </div>
-      </div>
+      <DashboardHeader title="Marketing Cloud Dashboard" subtitle="Salesforce Marketing Cloud metrics" />
 
-      {/* Universal KPIs */}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
         <KPICard title="Sessions / Visits" value="3,350" change="+8.1%" icon={Eye} />
         <KPICard title="Users" value="2,840" change="+7.5%" icon={Users} />
@@ -68,7 +54,6 @@ export function MarketingCloudDashboard({ onBack }: MarketingCloudDashboardProps
         <KPICard title="Avg Session Duration" value="2:45" change="+0:12" icon={Clock} />
       </div>
 
-      {/* Core Email Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <KPICard title="Open Rate" value="30.0%" change="+2.0%" icon={Mail} />
         <KPICard title="Click-Through Rate" value="7.2%" change="+0.4%" icon={MousePointer} />
@@ -76,14 +61,12 @@ export function MarketingCloudDashboard({ onBack }: MarketingCloudDashboardProps
         <KPICard title="Click to Open" value="24.0%" change="+0.9%" icon={Percent} />
       </div>
 
-      {/* Email Delivery */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <KPICard title="Bounce Rate (Delivery)" value="1.2%" change="-0.3%" isPositive />
         <KPICard title="Unsubscribe Rate" value="0.18%" change="-0.02%" isPositive />
         <KPICard title="Total Emails Sent" value="13,680" change="+840" icon={Mail} />
       </div>
 
-      {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <ChartCard title="Email Performance Trends">
           <ResponsiveContainer width="100%" height={280}>
@@ -92,13 +75,7 @@ export function MarketingCloudDashboard({ onBack }: MarketingCloudDashboardProps
               <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <YAxis yAxisId="left" stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <YAxis yAxisId="right" orientation="right" stroke="hsl(var(--muted-foreground))" fontSize={12} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
-                }}
-              />
+              <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "8px" }} />
               <Legend />
               <Line yAxisId="left" type="monotone" dataKey="openRate" name="Open Rate (%)" stroke="hsl(155, 70%, 45%)" strokeWidth={2} />
               <Line yAxisId="left" type="monotone" dataKey="ctr" name="CTR (%)" stroke="hsl(220, 70%, 55%)" strokeWidth={2} />
@@ -114,13 +91,7 @@ export function MarketingCloudDashboard({ onBack }: MarketingCloudDashboardProps
               <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <YAxis yAxisId="left" stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <YAxis yAxisId="right" orientation="right" stroke="hsl(var(--muted-foreground))" fontSize={12} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
-                }}
-              />
+              <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "8px" }} />
               <Legend />
               <Bar yAxisId="left" dataKey="conversions" name="Conversions" fill="hsl(155, 70%, 45%)" radius={[4, 4, 0, 0]} />
               <Bar yAxisId="right" dataKey="revenue" name="Revenue ($)" fill="hsl(220, 70%, 55%)" radius={[4, 4, 0, 0]} />

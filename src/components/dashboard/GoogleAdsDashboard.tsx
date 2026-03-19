@@ -1,6 +1,7 @@
 import { KPICard } from "./KPICard";
 import { ChartCard } from "./ChartCard";
-import { Eye, Users, Percent, MousePointer, DollarSign, TrendingUp, Clock, Star, FileText, ArrowLeft } from "lucide-react";
+import { DashboardHeader } from "./DashboardHeader";
+import { Eye, Users, Percent, MousePointer, DollarSign, TrendingUp, Clock, Star } from "lucide-react";
 import {
   BarChart,
   Bar,
@@ -11,10 +12,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-
-interface GoogleAdsDashboardProps {
-  onBack?: () => void;
-}
 
 const searchTermData = [
   { term: "enterprise software", clicks: 850, conversions: 68 },
@@ -29,22 +26,11 @@ const campaignROIData = [
   { campaign: "Shopping Ads", roi: 420, revenue: 18500 },
 ];
 
-export function GoogleAdsDashboard({ onBack }: GoogleAdsDashboardProps) {
+export function GoogleAdsDashboard() {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center gap-4">
-        {onBack && (
-          <button onClick={onBack} className="p-2 rounded-lg hover:bg-muted transition-colors">
-            <ArrowLeft className="w-5 h-5 text-muted-foreground" />
-          </button>
-        )}
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Google Ads</h1>
-          <p className="text-muted-foreground mt-1">Google Analytics & Google Ads metrics</p>
-        </div>
-      </div>
+      <DashboardHeader title="Google Ads" subtitle="Google Analytics & Google Ads metrics" />
 
-      {/* Universal KPIs */}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
         <KPICard title="Sessions / Visits" value="9,420" change="+6.8%" icon={Eye} />
         <KPICard title="Users" value="7,850" change="+6.2%" icon={Users} />
@@ -61,7 +47,6 @@ export function GoogleAdsDashboard({ onBack }: GoogleAdsDashboardProps) {
         <KPICard title="Avg Session Duration" value="2:05" change="+0:10" icon={Clock} />
       </div>
 
-      {/* Google Ads Specific */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <KPICard title="Impressions" value="248K" change="+14.2%" icon={Eye} />
         <KPICard title="CTR" value="3.8%" change="+0.3%" icon={MousePointer} />
@@ -69,7 +54,6 @@ export function GoogleAdsDashboard({ onBack }: GoogleAdsDashboardProps) {
         <KPICard title="Quality Score" value="7.8/10" change="+0.4" icon={Star} />
       </div>
 
-      {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <ChartCard title="Search Term Performance (Top Converting)">
           <ResponsiveContainer width="100%" height={280}>
@@ -77,13 +61,7 @@ export function GoogleAdsDashboard({ onBack }: GoogleAdsDashboardProps) {
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
               <XAxis type="number" stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <YAxis dataKey="term" type="category" stroke="hsl(var(--muted-foreground))" fontSize={11} width={120} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
-                }}
-              />
+              <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "8px" }} />
               <Legend />
               <Bar dataKey="clicks" name="Clicks" fill="hsl(220, 70%, 55%)" radius={[0, 4, 4, 0]} />
               <Bar dataKey="conversions" name="Conversions" fill="hsl(155, 70%, 45%)" radius={[0, 4, 4, 0]} />
@@ -98,13 +76,7 @@ export function GoogleAdsDashboard({ onBack }: GoogleAdsDashboardProps) {
               <XAxis dataKey="campaign" stroke="hsl(var(--muted-foreground))" fontSize={10} />
               <YAxis yAxisId="left" stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <YAxis yAxisId="right" orientation="right" stroke="hsl(var(--muted-foreground))" fontSize={12} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
-                }}
-              />
+              <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "8px" }} />
               <Legend />
               <Bar yAxisId="left" dataKey="roi" name="ROI (%)" fill="hsl(155, 70%, 45%)" radius={[4, 4, 0, 0]} />
               <Bar yAxisId="right" dataKey="revenue" name="Revenue ($)" fill="hsl(220, 70%, 55%)" radius={[4, 4, 0, 0]} />

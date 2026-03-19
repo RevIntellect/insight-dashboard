@@ -1,6 +1,7 @@
 import { KPICard } from "./KPICard";
 import { ChartCard } from "./ChartCard";
-import { DollarSign, TrendingUp, Percent, Target, ArrowLeft } from "lucide-react";
+import { DashboardHeader } from "./DashboardHeader";
+import { DollarSign, TrendingUp, Percent, Target } from "lucide-react";
 import {
   LineChart,
   Line,
@@ -13,12 +14,7 @@ import {
   Legend,
   ResponsiveContainer,
   ComposedChart,
-  Area,
 } from "recharts";
-
-interface FinancialDashboardProps {
-  onBack: () => void;
-}
 
 const revenueData = [
   { month: "Jan", revenue: 85000, cost: 32000, profit: 53000 },
@@ -37,21 +33,10 @@ const roiData = [
   { channel: "SEO", roi: 850, spend: 12000 },
 ];
 
-export function FinancialDashboard({ onBack }: FinancialDashboardProps) {
+export function FinancialDashboard() {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center gap-4">
-        <button
-          onClick={onBack}
-          className="p-2 rounded-lg hover:bg-muted transition-colors"
-        >
-          <ArrowLeft className="w-5 h-5 text-muted-foreground" />
-        </button>
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Financial Performance</h1>
-          <p className="text-muted-foreground mt-1">Revenue, costs, and ROI metrics</p>
-        </div>
-      </div>
+      <DashboardHeader title="Financial Performance" subtitle="Revenue, costs, and ROI metrics" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <KPICard title="Total Revenue" value="$633K" change="+18.5%" icon={DollarSign} />
@@ -68,11 +53,7 @@ export function FinancialDashboard({ onBack }: FinancialDashboardProps) {
               <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <Tooltip
-                contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
-                }}
+                contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "8px" }}
                 formatter={(value) => [`$${(value as number).toLocaleString()}`, ""]}
               />
               <Legend />
@@ -90,11 +71,7 @@ export function FinancialDashboard({ onBack }: FinancialDashboardProps) {
               <XAxis type="number" stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <YAxis dataKey="channel" type="category" stroke="hsl(var(--muted-foreground))" fontSize={12} width={100} />
               <Tooltip
-                contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
-                }}
+                contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "8px" }}
                 formatter={(value, name) => [name === 'roi' ? `${value}%` : `$${(value as number).toLocaleString()}`, name === 'roi' ? 'ROI' : 'Spend']}
               />
               <Legend />

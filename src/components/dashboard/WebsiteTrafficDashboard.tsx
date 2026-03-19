@@ -1,6 +1,7 @@
 import { KPICard } from "./KPICard";
 import { ChartCard } from "./ChartCard";
-import { Globe, Users, Clock, FileText, MousePointer, Eye, ArrowLeft } from "lucide-react";
+import { DashboardHeader } from "./DashboardHeader";
+import { Globe, Users, Clock, FileText, MousePointer, Eye } from "lucide-react";
 import {
   LineChart,
   Line,
@@ -13,10 +14,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-
-interface WebsiteTrafficDashboardProps {
-  onBack: () => void;
-}
 
 const trafficData = [
   { month: "Jan", sessions: 45000, users: 32000, pageviews: 125000 },
@@ -36,21 +33,10 @@ const deviceData = [
   { month: "Jun", desktop: 45, mobile: 45, tablet: 10 },
 ];
 
-export function WebsiteTrafficDashboard({ onBack }: WebsiteTrafficDashboardProps) {
+export function WebsiteTrafficDashboard() {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center gap-4">
-        <button
-          onClick={onBack}
-          className="p-2 rounded-lg hover:bg-muted transition-colors"
-        >
-          <ArrowLeft className="w-5 h-5 text-muted-foreground" />
-        </button>
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Website Traffic</h1>
-          <p className="text-muted-foreground mt-1">Google Analytics data overview</p>
-        </div>
-      </div>
+      <DashboardHeader title="Website Traffic" subtitle="Google Analytics data overview" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <KPICard title="Total Sessions" value="340K" change="+18.2%" icon={Globe} />
@@ -73,13 +59,7 @@ export function WebsiteTrafficDashboard({ onBack }: WebsiteTrafficDashboardProps
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
               <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
-                }}
-              />
+              <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "8px" }} />
               <Legend />
               <Area type="monotone" dataKey="sessions" stackId="1" stroke="hsl(155, 70%, 45%)" fill="hsl(155, 70%, 45%)" fillOpacity={0.6} />
               <Area type="monotone" dataKey="users" stackId="2" stroke="hsl(220, 70%, 55%)" fill="hsl(220, 70%, 55%)" fillOpacity={0.6} />
@@ -93,13 +73,7 @@ export function WebsiteTrafficDashboard({ onBack }: WebsiteTrafficDashboardProps
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
               <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
-                }}
-              />
+              <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "8px" }} />
               <Legend />
               <Line type="monotone" dataKey="desktop" stroke="hsl(220, 70%, 55%)" strokeWidth={2} />
               <Line type="monotone" dataKey="mobile" stroke="hsl(155, 70%, 45%)" strokeWidth={2} />

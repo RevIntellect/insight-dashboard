@@ -1,6 +1,7 @@
 import { KPICard } from "./KPICard";
 import { ChartCard } from "./ChartCard";
-import { Eye, Users, Percent, MousePointer, DollarSign, TrendingUp, Clock, Heart, Share2, UserPlus, ArrowLeft } from "lucide-react";
+import { DashboardHeader } from "./DashboardHeader";
+import { Eye, Users, Percent, MousePointer, DollarSign, TrendingUp, Clock, Heart, Share2, UserPlus } from "lucide-react";
 import {
   BarChart,
   Bar,
@@ -10,10 +11,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-
-interface LinkedInDashboardProps {
-  onBack?: () => void;
-}
 
 const weeklyEngagementData = [
   { day: "Mon", engagement: 8500 },
@@ -30,22 +27,11 @@ const postTypeData = [
   { type: "Article", engagement: 225 },
 ];
 
-export function LinkedInDashboard({ onBack }: LinkedInDashboardProps) {
+export function LinkedInDashboard() {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center gap-4">
-        {onBack && (
-          <button onClick={onBack} className="p-2 rounded-lg hover:bg-muted transition-colors">
-            <ArrowLeft className="w-5 h-5 text-muted-foreground" />
-          </button>
-        )}
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">LinkedIn Organic</h1>
-          <p className="text-muted-foreground mt-1">Organic social performance metrics</p>
-        </div>
-      </div>
+      <DashboardHeader title="LinkedIn Organic" subtitle="Organic social performance metrics" />
 
-      {/* Universal KPIs */}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
         <KPICard title="Sessions / Visits" value="2,840" change="+12.3%" icon={Eye} />
         <KPICard title="Users" value="2,450" change="+11.8%" icon={Users} />
@@ -62,7 +48,6 @@ export function LinkedInDashboard({ onBack }: LinkedInDashboardProps) {
         <KPICard title="Avg Session Duration" value="1:52" change="+0:08" icon={Clock} />
       </div>
 
-      {/* LinkedIn-Specific Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <KPICard title="Impressions" value="49.1K" change="+18.3%" icon={Eye} />
         <KPICard title="Engagement" value="2,275" change="+24.1%" icon={Heart} />
@@ -70,7 +55,6 @@ export function LinkedInDashboard({ onBack }: LinkedInDashboardProps) {
         <KPICard title="Shares" value="342" change="+12" icon={Share2} />
       </div>
 
-      {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <ChartCard title="Weekly Engagement">
           <ResponsiveContainer width="100%" height={280}>
@@ -78,13 +62,7 @@ export function LinkedInDashboard({ onBack }: LinkedInDashboardProps) {
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
               <XAxis dataKey="day" stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
-                }}
-              />
+              <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "8px" }} />
               <Bar dataKey="engagement" fill="hsl(220, 70%, 55%)" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
@@ -96,13 +74,7 @@ export function LinkedInDashboard({ onBack }: LinkedInDashboardProps) {
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
               <XAxis type="number" stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <YAxis dataKey="type" type="category" stroke="hsl(var(--muted-foreground))" fontSize={12} width={80} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
-                }}
-              />
+              <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "8px" }} />
               <Bar dataKey="engagement" fill="hsl(155, 70%, 45%)" radius={[0, 4, 4, 0]} />
             </BarChart>
           </ResponsiveContainer>

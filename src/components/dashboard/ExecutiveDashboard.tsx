@@ -1,9 +1,7 @@
-import { useState } from "react";
-import { DateRange } from "react-day-picker";
 import { KPICard } from "./KPICard";
 import { ChartCard } from "./ChartCard";
 import { InsightsCard } from "./InsightsCard";
-import { DateRangePicker } from "./DateRangePicker";
+import { DashboardHeader } from "./DashboardHeader";
 import { DollarSign, Users, TrendingUp, Percent, Clock, FileText, MousePointer, Eye } from "lucide-react";
 import {
   LineChart,
@@ -60,60 +58,17 @@ const insights = [
   { text: "Customer lifetime value up 22%", type: "warning" as const },
 ];
 
-interface ExecutiveDashboardProps {
-  onBack?: () => void;
-}
-
-export function ExecutiveDashboard({ onBack }: ExecutiveDashboardProps) {
-  const [dateRange, setDateRange] = useState<DateRange | undefined>();
-
+export function ExecutiveDashboard() {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
-          {onBack && (
-            <button
-              onClick={onBack}
-              className="p-2 rounded-lg hover:bg-muted transition-colors"
-            >
-              <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-            </button>
-          )}
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">Executive Summary</h1>
-            <DateRangePicker dateRange={dateRange} onDateRangeChange={setDateRange} />
-          </div>
-        </div>
-      </div>
+      <DashboardHeader title="Executive Summary" subtitle="High-level business performance metrics" />
 
       {/* Top KPIs */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <KPICard
-          title="YTD Revenue"
-          value="$627K"
-          change="+15.8% YoY"
-          icon={DollarSign}
-        />
-        <KPICard
-          title="Customer Acquisition"
-          value="3,847"
-          change="+12.3% YoY"
-          icon={Users}
-        />
-        <KPICard
-          title="Marketing ROI"
-          value="425%"
-          change="+32% YoY"
-          icon={TrendingUp}
-        />
-        <KPICard
-          title="Revenue Growth"
-          value="18.2%"
-          change="+3.1pp"
-          icon={Percent}
-        />
+        <KPICard title="YTD Revenue" value="$627K" change="+15.8% YoY" icon={DollarSign} />
+        <KPICard title="Customer Acquisition" value="3,847" change="+12.3% YoY" icon={Users} />
+        <KPICard title="Marketing ROI" value="425%" change="+32% YoY" icon={TrendingUp} />
+        <KPICard title="Revenue Growth" value="18.2%" change="+3.1pp" icon={Percent} />
       </div>
 
       {/* Second Row KPIs */}
@@ -144,20 +99,8 @@ export function ExecutiveDashboard({ onBack }: ExecutiveDashboardProps) {
                 }}
               />
               <Legend />
-              <Line
-                type="monotone"
-                dataKey="sessions"
-                stroke="hsl(155, 70%, 45%)"
-                strokeWidth={2}
-                dot={{ fill: "hsl(155, 70%, 45%)", strokeWidth: 2 }}
-              />
-              <Line
-                type="monotone"
-                dataKey="users"
-                stroke="hsl(220, 70%, 55%)"
-                strokeWidth={2}
-                dot={{ fill: "hsl(220, 70%, 55%)", strokeWidth: 2 }}
-              />
+              <Line type="monotone" dataKey="sessions" stroke="hsl(155, 70%, 45%)" strokeWidth={2} dot={{ fill: "hsl(155, 70%, 45%)", strokeWidth: 2 }} />
+              <Line type="monotone" dataKey="users" stroke="hsl(220, 70%, 55%)" strokeWidth={2} dot={{ fill: "hsl(220, 70%, 55%)", strokeWidth: 2 }} />
             </LineChart>
           </ResponsiveContainer>
         </ChartCard>
@@ -195,7 +138,7 @@ export function ExecutiveDashboard({ onBack }: ExecutiveDashboardProps) {
                 outerRadius={80}
                 paddingAngle={2}
                 dataKey="value"
-                label={({ name, value }) => `${value}%`}
+                label={({ value }) => `${value}%`}
                 labelLine={false}
               >
                 {trafficSourceData.map((entry, index) => (
